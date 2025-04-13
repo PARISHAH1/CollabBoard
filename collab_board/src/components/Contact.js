@@ -2,89 +2,118 @@ import React, { useState } from "react";
 import "../App.css";
 
 const Contact = () => {
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [message, setMessage] = useState("");
-  const [status, setStatus] = useState("");
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    message: "",
+  });
 
-  const handleSubmit = (e) => {
+  const [status, setStatus] = useState("");
+  const [loading, setLoading] = useState(false);
+
+  const isValidEmail = (email) =>
+    /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+
+  const handleChange = (e) => {
+    const { id, value } = e.target;
+    setFormData({ ...formData, [id]: value });
+  };
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    setStatus("");
     
-    // Basic form validation
+    const { name, email, message } = formData;
+
     if (!name || !email || !message) {
-      setStatus("Please fill out all fields.");
+      setStatus("⚠️ Please fill out all fields.");
       return;
     }
 
-    // Construct the contact form data
-    const contactData = { name, email, message };
+    if (!isValidEmail(email)) {
+      setStatus("⚠️ Please enter a valid email address.");
+      return;
+    }
 
-    // You can send this data to your backend (e.g., using Axios or Fetch)
-    fetch("http://localhost:5000/contact", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(contactData),
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        if (data.success) {
-          setStatus("Your message has been sent. Thank you!");
-        } else {
-          setStatus("Something went wrong. Please try again.");
-        }
-      })
-      .catch((error) => {
-        console.error("Error:", error);
-        setStatus("Something went wrong. Please try again.");
+    setLoading(true);
+
+    try {
+      const res = await fetch("http://localhost:5000/contact", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
       });
+
+      const data = await res.json();
+
+      if (data.success) {
+        setStatus("✅ Your message has been sent. Thank you!");
+        setFormData({ name: "", email: "", message: "" });
+      } else {
+        setStatus("❌ Something went wrong. Please try again later.");
+      }
+    } catch (error) {
+      console.error("Contact error:", error);
+      setStatus("❌ Server error. Please try again.");
+    }
+
+    setLoading(false);
   };
 
   return (
-    <div className="page contact">
-      <h1><span className="highlight">Contact Us</span></h1>
-      <form onSubmit={handleSubmit} className="contact-form">
+    <div className="page contact-page">
+      <h1 className="page-title">
+        <span className="highlight">Contact Us</span>
+      </h1>
+      <p className="page-subtitle">We’d love to hear from you. Send us your queries or feedback!</p>
+      
+      <form onSubmit={handleSubmit} className="form contact-form" aria-label="Contact Form">
         <div className="form-group">
-          <label htmlFor="name">Name</label>
+          <label htmlFor="name">Full Name</label>
           <input
-            type="text"
             id="name"
-            placeholder="Enter your name"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
+            type="text"
+            placeholder="John Doe"
+            value={formData.name}
+            onChange={handleChange}
             className="input"
+            aria-required="true"
           />
         </div>
 
         <div className="form-group">
-          <label htmlFor="email">Email</label>
+          <label htmlFor="email">Email Address</label>
           <input
-            type="email"
             id="email"
-            placeholder="Enter your email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
+            type="email"
+            placeholder="john@example.com"
+            value={formData.email}
+            onChange={handleChange}
             className="input"
+            aria-required="true"
           />
         </div>
 
         <div className="form-group">
-          <label htmlFor="message">Message</label>
+          <label htmlFor="message">Your Message</label>
           <textarea
             id="message"
-            placeholder="Enter your message"
-            value={message}
-            onChange={(e) => setMessage(e.target.value)}
+            placeholder="Write your message here..."
+            value={formData.message}
+            onChange={handleChange}
             className="textarea"
+            rows="5"
+            aria-required="true"
           />
         </div>
 
-        <button type="submit" className="btn green">
-          Send Message
+        <button type="submit" className="btn primary-btn" disabled={loading}>
+          {loading ? "Sending..." : "Send Message"}
         </button>
 
-        {status && <p className="status-message">{status}</p>}
+        {status && <p className="form-status">{status}</p>}
       </form>
     </div>
   );
