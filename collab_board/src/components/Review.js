@@ -12,7 +12,7 @@ const Review = () => {
   };
 
   return (
-    <div style={{ padding: "2rem" }}>
+    <div class="review" style={{ padding: "2rem" }}>
       <h2>Rate & Review Us</h2>
       <p>How was your experience?</p>
       <input

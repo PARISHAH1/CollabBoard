@@ -1,41 +1,67 @@
-import React, { useState } from "react";
-import { useNavigate, Link } from "react-router-dom";
+import React, { useState, useEffect } from "react";
 import "../App.css";
 
-const SignUp = () => {
-  const [name, setName] = useState("");
+const SignUp = ({ onClose, onSwitchToSignIn }) => {
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
   const [dob, setDob] = useState("");
   const [contact, setContact] = useState("");
-  const [password, setPassword] = useState("");
   const [generatedId, setGeneratedId] = useState("");
+  const [successMessage, setSuccessMessage] = useState("");
 
-  const navigate = useNavigate();
+  // Generate ID whenever required fields are valid
+  useEffect(() => {
+    if (
+      firstName.trim() &&
+      dob.match(/^\d{4}-\d{2}-\d{2}$/) &&
+      contact.match(/^\d{10}$/)
+    ) {
+      const formattedDob = formatDob(dob);
+      const id = `${firstName.toLowerCase()}@${formattedDob}#${contact.slice(-4)}`;
+      setGeneratedId(id);
+    } else {
+      setGeneratedId("");
+    }
+  }, [firstName, dob, contact]);
 
-  const formatDOB = (dobString) => {
-    const [year, month, day] = dobString.split("-");
-    const shortYear = year.slice(-2);
-    return `${day}${month}${shortYear}`;
+  const formatDob = (dob) => {
+    const [year, month, day] = dob.split("-");
+    return `${day}${month}${year.slice(-2)}`;
   };
 
-  const handleRegister = (e) => {
+  const handleSignup = (e) => {
     e.preventDefault();
 
-    if (name && email && dob && contact && password) {
-      const firstName = name.trim().split(" ")[0] || "";
-      const last4 = contact.slice(-4);
-      const dobFormatted = formatDOB(dob);
-
-      const userId = `${firstName}@${dobFormatted}#${last4}`;
-      setGeneratedId(userId);
-
-      // Optional: navigate("/signin"); after delay
-    } else {
-      alert("Please fill all fields");
+    // Validation
+    if (!firstName || !lastName || !email || !dob || !contact) {
+      alert("Please fill in all fields.");
+      return;
     }
+    if (!validateEmail(email)) {
+      alert("Please enter a valid email address.");
+      return;
+    }
+    if (!contact.match(/^\d{10}$/)) {
+      alert("Contact number must be exactly 10 digits.");
+      return;
+    }
+
+    // Save generated ID for later login (mocked using localStorage)
+    localStorage.setItem("generatedId", generatedId);
+
+    // Show success message and switch to SignIn modal
+    setSuccessMessage(`Signup successful! Your ID: ${generatedId}`);
+    setTimeout(() => {
+      setSuccessMessage("");
+      onClose();
+      onSwitchToSignIn();
+    }, 2500);
   };
 
-  const handleCopy = () => {
+  const validateEmail = (email) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+
+  const copyToClipboard = () => {
     if (generatedId) {
       navigator.clipboard.writeText(generatedId);
       alert("ID copied to clipboard!");
@@ -43,48 +69,93 @@ const SignUp = () => {
   };
 
   return (
-    <div style={{ padding: "2rem" }}>
-      <h2>Create New Account</h2>
-      <form onSubmit={handleRegister}>
-        <div>
-          <label>Name:</label><br />
-          <input type="text" required value={name} onChange={(e) => setName(e.target.value)} />
-        </div><br />
-        <div>
-          <label>Email:</label><br />
-          <input type="email" required value={email} onChange={(e) => setEmail(e.target.value)} />
-        </div><br />
-        <div>
-          <label>Date of Birth:</label><br />
-          <input type="date" required value={dob} onChange={(e) => setDob(e.target.value)} />
-        </div><br />
-        <div>
-          <label>Contact Number:</label><br />
-          <input type="tel" required maxLength="10" value={contact} onChange={(e) => setContact(e.target.value)} />
-        </div><br />
-        <div>
-          <label>Password:</label><br />
-          <input type="password" required value={password} onChange={(e) => setPassword(e.target.value)} />
-        </div><br />
-        <button type="submit">Register</button>
-      </form>
+    <div className="modal-overlay">
+      <div className="modal-content">
+        <span className="icon-close" onClick={onClose}>&#10005;</span>
+        <h2>Sign Up</h2>
+        <form onSubmit={handleSignup}>
+          <div className="input-box">
+            <label>First Name:</label><br />
+            <input
+              type="text"
+              required
+              value={firstName}
+              onChange={(e) => setFirstName(e.target.value)}
+            />
+          </div><br />
+          <div className="input-box">
+            <label>Last Name:</label><br />
+            <input
+              type="text"
+              required
+              value={lastName}
+              onChange={(e) => setLastName(e.target.value)}
+            />
+          </div><br />
+          <div className="input-box">
+            <label>Email:</label><br />
+            <input
+              type="email"
+              required
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+            />
+          </div><br />
+          <div className="input-box">
+            <label>Date of Birth:</label><br />
+            <input
+              type="date"
+              required
+              value={dob}
+              onChange={(e) => setDob(e.target.value)}
+            />
+          </div><br />
+          <div className="input-box">
+            <label>Contact Number:</label><br />
+            <input
+              type="text"
+              required
+              maxLength={10}
+              value={contact}
+              onChange={(e) => setContact(e.target.value.replace(/\D/, ""))}
+            />
+          </div><br />
 
-      {generatedId && (
-        <div style={{ marginTop: "1.5rem", padding: "1rem", border: "1px solid #ccc", borderRadius: "8px", backgroundColor: "#f9f9f9" }}>
-          <strong>You successfully Created Your Account!!</strong>
-          <div style={{ marginTop: "0.5rem", display: "flex", alignItems: "center", gap: "1rem" }}>
-            <strong>Your Generated ID:</strong>
-            <span style={{ fontSize: "1.1rem", fontWeight: "bold" }}>{generatedId}</span>
-            <button onClick={handleCopy} style={{ padding: "4px 10px", cursor: "pointer", fontSize: "0.9rem" }}>
-              Copy
-            </button>
-          </div>
-        </div>
-      )}
+          {generatedId && (
+            <>
+              <p>Your Generated ID: {generatedId}</p>
+              {/* Copy ID button */}
+              <button type="button" className="btn" onClick={copyToClipboard}>
+                Copy ID
+              </button>
+            </>
+          )}
 
-      <p style={{ marginTop: "1rem" }}>
-        Already have an account? <Link to="/signin">Login</Link>
-      </p>
+          {!successMessage && (
+            <>
+              {/* Signup button */}
+              <button type="submit" className="btn">Sign Up</button>
+            </>
+          )}
+        </form>
+
+        {successMessage && (
+          <p style={{ color: "green", marginTop: "1rem" }}>{successMessage}</p>
+        )}
+
+        <p style={{ marginTop: "1rem" }}>
+          Already have an account?{" "}
+          <span
+            style={{ textDecoration: "underline", cursor: "pointer" }}
+            onClick={() => {
+              onClose();
+              onSwitchToSignIn();
+            }}
+          >
+            Sign In
+          </span>
+        </p>
+      </div>
     </div>
   );
 };

@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import "../App.css"; // Optional: style it separately
 
-const Navbar = () => {
+const Navbar = ({ onSignIn, onSignUp }) => {
   return (
     <nav className="navbar">
       <h2 className="logo">CollabBoard</h2>
@@ -12,9 +12,9 @@ const Navbar = () => {
         <li><Link to="/about">About</Link></li>
         <li><Link to="/review">Review</Link></li>
         <li><Link to="/contact">Contact</Link></li>
-        <li><Link to="/signin">Sign In</Link></li>
-        <li><Link to="/signup">Sign Up</Link></li>
-      </ul>
+        </ul>
+        <button class="btnLogin-popup" onClick={onSignIn}>Sign In</button>
+        <button class="btnLogin-popup" onClick={onSignIn}>Sign Up</button>
     </nav>
   );
 };

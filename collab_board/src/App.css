@@ -1,10 +1,22 @@
-/* General Styles */
-body {
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+/* Import Font */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap');
+
+/* Reset and Base */
+* {
   margin: 0;
   padding: 0;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
+}
+
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
   background: linear-gradient(135deg, #e9eff5, #f4f7fa);
   color: #333;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 .app {
@@ -15,9 +27,14 @@ body {
 
 /* Navbar */
 .navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 99;
+  width: 100%;
+  padding: 20px 100px;
   background: linear-gradient(90deg, #4CAF50, #2e7d32);
   color: white;
-  padding: 1rem 2rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -27,31 +44,75 @@ body {
 .navbar .logo {
   font-size: 28px;
   font-weight: bold;
+  color: #fff;
+  user-select: none;
 }
 
 .nav-links {
-  list-style: none;
   display: flex;
   gap: 1.5rem;
+  list-style: none;
+}
+
+.nav-links li {
+  position: relative;
+  font-size: 1.1em;
+  font-weight: 500;
 }
 
 .nav-links li a {
   color: white;
   text-decoration: none;
-  font-size: 18px;
-  position: relative;
-  transition: 0.3s ease;
 }
 
-.nav-links li a:hover {
-  color: #d4ffd4;
-  transform: scale(1.05);
+.nav-links li::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: -6px;
+  width: 100%;
+  height: 3px;
+  background: #fff;
+  border-radius: 5px;
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform 0.5s;
 }
 
-/* Home Page */
+.nav-links li:hover::after {
+  transform-origin: left;
+  transform: scaleX(1);
+}
+
+.btnLogin-popup {
+  width: 130px;
+  height: 50px;
+  margin-left: 40px;
+  background: transparent;
+  border: 2px solid #aee375;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 1.1em;
+  color: #fff;
+  font-weight: 500;
+  transition: 0.5s;
+}
+
+.btnLogin-popup:hover {
+  background: #aee375;
+  color: #fff;
+}
+
+.btnLogin-popup a {
+  color: white;
+  text-decoration: none;
+}
+
+/* Home */
 .home-container {
   position: relative;
   height: 100vh;
+  padding-top: 100px;
   overflow: hidden;
 }
 
@@ -93,9 +154,9 @@ body {
 }
 
 .home-extra-links a {
-  color: #81c784; /* green accent */
-  text-decoration: none;
+  color: #81c784;
   font-weight: bold;
+  text-decoration: none;
   transition: color 0.3s ease;
 }
 
@@ -103,10 +164,10 @@ body {
   color: #a5d6a7;
 }
 
-
-/* About Page */
+/* Shared Sections */
 .about, .videocall, .review, .contact-page {
-  padding: 4rem 2rem;
+  position: relative;
+  padding: 6rem 2rem;
   text-align: center;
 }
 
@@ -124,12 +185,12 @@ body {
   margin: 1rem auto;
 }
 
-/* Video Call Section */
+/* Video Call */
 .video-container {
   display: flex;
   justify-content: center;
-  gap: 2rem;
   flex-wrap: wrap;
+  gap: 2rem;
   margin-top: 2rem;
 }
 
@@ -150,18 +211,18 @@ body {
 .call-controls input {
   padding: 10px;
   width: 300px;
+  font-size: 16px;
+  margin-bottom: 1rem;
   border: 1px solid #ccc;
   border-radius: 6px;
-  margin-bottom: 1rem;
-  font-size: 16px;
   box-shadow: inset 0 1px 3px rgba(0,0,0,0.1);
 }
 
 .call-controls .btn {
   padding: 10px 25px;
+  font-size: 16px;
   border: none;
   border-radius: 6px;
-  font-size: 16px;
   cursor: pointer;
   transition: 0.3s ease;
 }
@@ -180,12 +241,12 @@ body {
   transform: scale(1.05);
 }
 
-/* Contact Page */
+/* Contact */
 .contact {
-  background-color: #ffffff;
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
-  border-radius: 10px;
+  background: #fff;
   padding: 2rem;
+  border-radius: 10px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
 }
 
 .contact h1 {
@@ -194,17 +255,17 @@ body {
 }
 
 .contact-form .form-group {
-  text-align: left;
   margin-bottom: 1.2rem;
+  text-align: left;
 }
 
 .contact-form input,
 .contact-form textarea {
   width: 100%;
   padding: 12px;
+  font-size: 15px;
   border: 1px solid #ccc;
   border-radius: 6px;
-  font-size: 15px;
   transition: border 0.3s ease;
 }
 
@@ -236,14 +297,14 @@ body {
   font-weight: 500;
 }
 
-/* Review Page */
+/* Review */
 .review input,
 .review textarea {
-  padding: 10px;
   width: 300px;
+  padding: 10px;
   margin: 10px 0;
-  border-radius: 6px;
   border: 1px solid #ccc;
+  border-radius: 6px;
 }
 
 .review textarea {
@@ -252,15 +313,173 @@ body {
 
 .review button {
   padding: 10px 20px;
-  margin-top: 10px;
+  font-size: 16px;
+  background: #4CAF50;
+  color: white;
   border: none;
   border-radius: 6px;
-  background-color: #4CAF50;
-  color: white;
-  font-size: 16px;
   cursor: pointer;
 }
 
 .review button:hover {
-  background-color: #45a049;
+  background: #38853c;
+}
+
+/* Login/Register Popup */
+.wrapper {
+  position: relative;
+  width: 400px;
+  height: 440px;
+  background: transparent;
+  border: 2px solid rgba(255, 255, 255, 0.5);
+  border-radius: 20px;
+  backdrop-filter: blur(20px);
+  box-shadow: 0 0 30px rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transform: scale(1);
+  transition: transform .5s ease, height .1s ease;
+}
+
+.wrapper.active-popup {
+  transform: scale(1);
+}
+
+.wrapper.active {
+  height: 520px;
+}
+
+.wrapper .form-box {
+  width: 100%;
+  padding: 40px;
+}
+
+.wrapper .form-box.login {
+  transform: translateX(0);
+  transition: transform .18s ease;
+}
+
+.wrapper.active .form-box.login {
+  transform: translateX(-400px);
+  transition: none;
+}
+
+.wrapper .form-box.register {
+  position: absolute;
+  transform: translateX(400px);
+  transition: none;
+}
+
+.wrapper.active .form-box.register {
+  transform: translateX(0);
+  transition: transform .18s ease;
+}
+
+.wrapper .icon-close {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 45px;
+  height: 45px;
+  background: #162938;
+  color: #fff;
+  font-size: 2em;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-bottom-left-radius: 20px;
+  cursor: pointer;
+  z-index: 1;
+}
+
+/* Form Styling */
+.form-box h2 {
+  font-size: 2em;
+  color: #162938;
+  text-align: center;
+}
+
+.input-box {
+  position: relative;
+  width: 100%;
+  height: 50px;
+  margin: 30px 0;
+  border-bottom: 2px solid #162938;
+}
+
+.input-box label {
+  position: absolute;
+  top: 50%;
+  left: 5px;
+  transform: translateY(-50%);
+  font-size: 1em;
+  font-weight: 500;
+  color: #162938;
+  transition: 0.5s;
+  pointer-events: none;
+}
+
+.input-box input {
+  width: 100%;
+  height: 100%;
+  background: transparent;
+  font-size: 1em;
+  font-weight: 600;
+  color: #162938;
+  border: none;
+  outline: none;
+  padding: 0 35px 0 5px;
+}
+
+.input-box input:focus ~ label,
+.input-box input:valid ~ label {
+  top: -5px;
+}
+
+.modal-overlay {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0,0,0,0.5);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.modal-content {
+  background: #fff;
+  border-radius: 10px;
+  padding: 2rem;
+  position: relative;
+  max-width: 400px;
+  width: 90vw;
+}
+
+.icon-close {
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  font-size: 1.5rem;
+  cursor: pointer;
+}
+
+.input-box input {
+  width: 100%;
+  padding: 0.5rem;
+  font-size: 1rem;
+}
+
+.btn {
+  background-color: #007BFF;
+  color: white;
+  border: none;
+  padding: 0.6rem 1.2rem;
+  font-size: 1rem;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.btn:hover {
+  background-color: #0056b3;
 }

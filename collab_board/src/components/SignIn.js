@@ -1,41 +1,64 @@
 import React, { useState } from "react";
-import { useNavigate, Link } from "react-router-dom";
 import "../App.css";
 
-const SignIn = () => {
+const SignIn = ({ onClose, onSwitchToSignUp }) => {
   const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const navigate = useNavigate();
+  const [id, setId] = useState(""); // Replacing password with ID
 
   const handleLogin = (e) => {
     e.preventDefault();
 
-    if (email === "test@gmail.com" && password === "1234") {
+    // Mock validation: Retrieve stored/generated ID (e.g., from localStorage)
+    const storedId = localStorage.getItem("generatedId"); // Assuming ID is saved during signup
+
+    if (email === "test@gmail.com" && id === storedId) {
       alert("Login successful!");
-      navigate("/call");
+      onClose(); // Close popup after successful login
     } else {
-      alert("Invalid credentials.");
+      alert("Invalid email or ID.");
     }
   };
 
   return (
-    <div style={{ padding: "2rem" }}>
-      <h2>Log In to Your Existing Account</h2>
-      <form onSubmit={handleLogin}>
-        <div>
-          <label>Email:</label><br />
-          <input type="email" required value={email} onChange={(e) => setEmail(e.target.value)} />
-        </div><br />
-        <div>
-          <label>Password:</label><br />
-          <input type="password" required value={password} onChange={(e) => setPassword(e.target.value)} />
-        </div><br />
-        <button type="submit">Login</button>
-      </form>
-
-      <p style={{ marginTop: "1rem" }}>
-        Don’t have an account? <Link to="/signup">Sign Up</Link>
-      </p>
+    <div className="modal-overlay">
+      <div className="modal-content">
+        <span className="icon-close" onClick={onClose}>&#10005;</span>
+        <h2>Log In</h2>
+        <form onSubmit={handleLogin}>
+          <div className="input-box">
+            <label>Email:</label><br />
+            <input
+              type="email"
+              required
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+            />
+          </div><br />
+          <div className="input-box">
+            <label>Generated ID:</label><br />
+            <input
+              type="text"
+              required
+              value={id}
+              onChange={(e) => setId(e.target.value)}
+              placeholder="Enter your generated ID"
+            />
+          </div><br />
+          <button type="submit" className="btn">Login</button>
+        </form>
+        <p style={{ marginTop: "1rem" }}>
+          Don’t have an account?{" "}
+          <span
+            style={{ textDecoration: "underline", cursor: "pointer" }}
+            onClick={() => {
+              onClose();
+              onSwitchToSignUp();
+            }}
+          >
+            Sign Up
+          </span>
+        </p>
+      </div>
     </div>
   );
 };
