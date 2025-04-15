@@ -1,8 +1,9 @@
 import React, { useState } from "react";
-import "../App.css";
+import "../styles/Review.css";
 
 const Review = () => {
   const [rating, setRating] = useState(0);
+  const [hover, setHover] = useState(0);
   const [review, setReview] = useState("");
 
   const handleSubmit = () => {
@@ -12,27 +13,31 @@ const Review = () => {
   };
 
   return (
-    <div class="review" style={{ padding: "2rem" }}>
-      <h2>Rate & Review Us</h2>
-      <p>How was your experience?</p>
-      <input
-        type="number"
-        min="1"
-        max="5"
-        value={rating}
-        onChange={(e) => setRating(e.target.value)}
-        placeholder="Rate out of 5"
-      />
-      <br />
+    <div className="review-container">
+      <h2>Rate Your Experience</h2>
+      <p className="subtitle">We value your feedback!</p>
+      <div className="stars">
+        {[...Array(5)].map((_, index) => {
+          const starValue = index + 1;
+          return (
+            <span
+              key={index}
+              className={`star ${starValue <= (hover || rating) ? "active" : ""}`}
+              onClick={() => setRating(starValue)}
+              onMouseEnter={() => setHover(starValue)}
+              onMouseLeave={() => setHover(0)}
+            >
+              ★
+            </span>
+          );
+        })}
+      </div>
       <textarea
+        placeholder="Write your review..."
         value={review}
         onChange={(e) => setReview(e.target.value)}
-        rows="4"
-        cols="40"
-        placeholder="Write your feedback..."
       />
-      <br />
-      <button onClick={handleSubmit}>Submit</button>
+      <button onClick={handleSubmit}>Submit Review</button>
     </div>
   );
 };

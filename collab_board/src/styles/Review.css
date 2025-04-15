@@ -1,0 +1,68 @@
+.review-container {
+    background: linear-gradient(135deg, #e0ffe0, #b2fab4);
+    min-height: 100vh;
+    padding: 3rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: #2f4f4f;
+    text-align: center;
+  }
+  
+  h2 {
+    font-size: 2.5rem;
+    margin-bottom: 0.5rem;
+    color: #007f5f;
+  }
+  
+  .subtitle {
+    font-size: 1.2rem;
+    margin-bottom: 1.5rem;
+    color: #4a766e;
+  }
+  
+  .stars {
+    display: flex;
+    gap: 10px;
+    font-size: 2.5rem;
+    margin-bottom: 1.5rem;
+  }
+  
+  .star {
+    cursor: pointer;
+    transition: transform 0.2s ease-in-out;
+    color: #ccc;
+  }
+  
+  .star.active {
+    color: #00c851;
+    transform: scale(1.2);
+  }
+  
+  textarea {
+    width: 60%;
+    padding: 1rem;
+    font-size: 1rem;
+    border: 2px solid #00c851;
+    border-radius: 12px;
+    resize: none;
+    margin-bottom: 1.5rem;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  }
+  
+  button {
+    background-color: #00c851;
+    border: none;
+    color: white;
+    padding: 0.8rem 2rem;
+    font-size: 1.1rem;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  button:hover {
+    background-color: #009e4f;
+  }
+  
