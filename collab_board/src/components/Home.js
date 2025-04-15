@@ -34,7 +34,6 @@ const Home = () => {
           <p>
             Not a member yet?{" "}
             <a
-              
               onClick={() => setShowSignUp(true)}
             >
               Join the Smart Community
@@ -44,7 +43,6 @@ const Home = () => {
           <p>
             Already part of the crew?{" "}
             <a
-              
               onClick={() => setShowSignIn(true)}
             >
               Sign In

@@ -26,7 +26,6 @@ function App() {
   return (
     <Router>
       <div className="app">
-        <h1>Welcome to My App</h1>
         <nav className="navbar">
           <div className="logo">🎥 Collabboard</div>
           <ul className="nav-links">

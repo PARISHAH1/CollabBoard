@@ -3,7 +3,7 @@ import "../App.css";
 
 const About = () => {
   return (
-    <div style={{ padding: "2rem" }}>
+    <div class="about" style={{ padding: "12rem" }}>
       <h2>About CollabBoard</h2>
       <p>
         CollabBoard is a real-time video conferencing platform built for smooth

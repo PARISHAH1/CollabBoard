@@ -151,7 +151,6 @@ body {
 
 .home-extra-links p {
   margin: 0.8rem 0;
-  cursor: pointer;
 }
 
 .home-extra-links a {
@@ -169,11 +168,13 @@ body {
 /* Shared Sections */
 .about, .videocall, .review, .contact-page {
   position: relative;
+  padding-top: 300px;
   padding: 6rem 2rem;
+  
   text-align: center;
 }
 
-.about h1, .videocall h1 {
+.about h2, .videocall h1 {
   font-size: 40px;
   background: linear-gradient(to right, #4CAF50, #2e7d32);
   -webkit-background-clip: text;
