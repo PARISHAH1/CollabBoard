@@ -1,0 +1,69 @@
+/* About.css */
+
+.about-container {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    overflow: hidden;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #e6fff2;
+    padding: 2rem;
+  }
+  
+  .background-video {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: -2;
+  }
+  
+  .about-overlay {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to top right, rgba(0, 128, 91, 0.4), rgba(0, 201, 151, 0.2));
+    backdrop-filter: blur(4px);
+    z-index: -1;
+  }
+  
+  .about-content {
+    background: rgba(0, 0, 0, 0.4);
+    padding: 50px;
+    border-radius: 20px;
+    max-width: 900px;
+    animation: fadeInUp 1.2s ease;
+    box-shadow: 0 0 20px rgba(0, 255, 128, 0.25);
+    border: 1px solid rgba(0, 255, 170, 0.2);
+    backdrop-filter: blur(12px);
+  }
+  
+  .about-content h1 {
+    font-size: 3rem;
+    margin-bottom: 1.5rem;
+    color: #aaffd5;
+    text-shadow: 2px 2px 8px rgba(0, 128, 91, 0.4);
+  }
+  
+  .about-content p {
+    font-size: 1.2rem;
+    line-height: 1.7;
+    margin-bottom: 1rem;
+    color: #d5fff1;
+  }
+  
+  /* Animation */
+  @keyframes fadeInUp {
+    0% {
+      transform: translateY(40px);
+      opacity: 0;
+    }
+    100% {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }
+  
