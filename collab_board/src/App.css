@@ -151,10 +151,12 @@ body {
 
 .home-extra-links p {
   margin: 0.8rem 0;
+  cursor: pointer;
 }
 
 .home-extra-links a {
   color: #81c784;
+  cursor: pointer;
   font-weight: bold;
   text-decoration: none;
   transition: color 0.3s ease;

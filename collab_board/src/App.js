@@ -32,7 +32,7 @@ function App() {
           <ul className="nav-links">
             <li><Link to="/">Home</Link></li>
             <li><Link to="/about">About</Link></li>
-            <li><Link to="/call">Video Call</Link></li>
+            <li><Link to="/call">Join Call</Link></li>
             <li><Link to="/contact">Contact Us</Link></li>
             <li><Link to="/review">Rate US</Link></li>
           </ul>
