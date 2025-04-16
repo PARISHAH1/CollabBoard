@@ -163,7 +163,7 @@ const VideoCall = () => {
   };
 
   return (
-    <div className="page videocall">
+    <div className="videocall">
       <h1><span className="highlight">Video Call Room</span></h1>
 
       <div className="video-container">

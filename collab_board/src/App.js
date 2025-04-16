@@ -35,8 +35,10 @@ function App() {
             <li><Link to="/contact">Contact Us</Link></li>
             <li><Link to="/review">Rate US</Link></li>
           </ul>
+          <div class="btnLogin">
           <button className="btnLogin-popup" onClick={() => setShowSignIn(true)}>Sign In</button>
           <button className="btnLogin-popup" onClick={() => setShowSignUp(true)}>Sign Up</button>
+          </div>
         </nav>
 
         {/* Modals */}

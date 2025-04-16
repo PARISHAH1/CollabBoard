@@ -10,8 +10,9 @@ const SignIn = ({ onClose, onSwitchToSignUp }) => {
 
     // Mock validation: Retrieve stored/generated ID (e.g., from localStorage)
     const storedId = localStorage.getItem("generatedId"); // Assuming ID is saved during signup
+    const storedemail = localStorage.getItem("email"); // Assuming ID is saved during signup
 
-    if (email === "test@gmail.com" && id === storedId) {
+    if (email === storedemail && id === storedId) {
       alert("Login successful!");
       onClose(); // Close popup after successful login
     } else {

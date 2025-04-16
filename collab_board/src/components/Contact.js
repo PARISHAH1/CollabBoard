@@ -63,7 +63,7 @@ const Contact = () => {
   };
 
   return (
-    <div className="page contact-page">
+    <div className="contact-page">
       <h1 className="page-title">
         <span className="highlight">Contact Us</span>
       </h1>

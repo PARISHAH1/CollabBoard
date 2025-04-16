@@ -48,6 +48,7 @@ const SignUp = ({ onClose, onSwitchToSignIn }) => {
     }
 
     // Save generated ID for later login (mocked using localStorage)
+    localStorage.setItem("email", email);
     localStorage.setItem("generatedId", generatedId);
 
     // Show success message and switch to SignIn modal
